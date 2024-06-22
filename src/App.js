@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Header from "./Component/Header";
+import Banner from "./Component/Banner";
+import OurProducts from "./Component/OurProducts";
+import Footer from "./Component/Footer";
 
-function App() {
+const App = () => {
+  const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setToggle(true);
+      } else {
+        setToggle(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>
+        <Header toggle={toggle} />
+        <Banner />
+        <OurProducts />
+        <Footer toggle={toggle} />
+      </div>
+    </>
   );
-}
+};
 
 export default App;
